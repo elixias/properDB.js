@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <script type="text/javascript" src="properDB.js"></script>
+    <script>
+
+        var myDB = new properDB(); //create a new DB with default settings
+        myDB = new properDB("DB_Name",1,"DB_Display Name",50000); //create a new DB with your settings
+        
+        //Database execute(), if you want to manually execute commands without using other properDB.js inbuilt functions
+        myDB.execute("DROP TABLE IF EXISTS commandtable");
+        myDB.execute("CREATE TABLE IF NOT EXISTS commandtable (P_ID INTEGER PRIMARY KEY, DATA VARCHAR(10))");
+        myDB.execute("INSERT INTO commandtable VALUES(null,'This is test data from database mgr.')");
+        myDB.execute("SELECT * FROM commandtable"); //will resolve with default callback (prints results using console.log)
+                                                    //you can overwrite the callback <database>.getExecResults but not recommended
+        var callback = function(result){ //specify your own callback
+            console.log("This is the default callback behavior! "+JSON.stringify(result));
+        }
+        myDB.execute("SELECT * FROM commandtable", callback);
+        
+        //adding a table to the DB, primary keys are auto created for you
+        myDB.addTable("testtable","T_COL1 VARCHAR(100), T_COL2 VARCHAR(100)");
+        
+        //create, delete or recreate the table
+        myDB["testtable"].drop(); //you will lose all entries in table
+		myDB["testtable"].create(); //if you want to create after dropping
+        myDB["testtable"].recreate(); //calls drop() then create()
+        
+        //Add new entries to tables. cascadable.
+        myDB["testtable"].add("entry 1","lorem ipsum")
+        .add("entry 2","dorsa latin")
+        .add("entry 3","third entry");
+        
+        //add new entries as an object
+        var new_entry = {"T_COL1":"entry X","T_COL2":"data X"};
+        myDB["testtable"].add(new_entry);
+        
+        //Before using get() to select entries,
+        //specify a callback function that takes in 'results'
+        //results is an array with each entry as an object
+        
+        //selecting entries
+        myDB["testtable"].get(); //get all
+        myDB["testtable"].get(3); //get id 3
+        myDB["testtable"].get("T_COL1='entry 2'");
+        
+        //deleting entries
+        myDB["testtable"].delete(1); //delete entry with ID 1
+        myDB["testtable"].delete("T_COL1='entry 3'"); ////DELETE entry WHERE T_DATA='entry 3'
+        myDB["testtable"].get(); //show results
+        
+        //updating entries
+        myDB["testtable"].update(2,"entry 2 updated","lorem ipsum lorem ipsum"); //update ID 2
+        myDB["testtable"].get(2);
+        var obj={"P_ID":2,"T_COL1":"entry 2 changed","T_COL2":"entry 2 data changed"} ; //update ID 2 using object
+		myDB["testtable"].update(obj);
+		myDB["testtable"].get(2);
+		
+		//Modifying existing data entry using get() and update()
+		// 1) Set callbacks first
+		var myCB2 = function(results){ 
+            console.log("Final results:"+JSON.stringify(results));   
+        }
+        var myCB = function(results){
+            var obj = results[0];               //take the first result entry
+            obj["T_COL1"] = "WE CHANGED THIS!"; //change variable this way
+            obj.T_COL2 = "And this too.";       //or this way
+			myDB["testtable"].update(obj);
+            myDB["testtable"].get(4, myCB2);    //display result using myCB2 callback
+        }
+		// 2) Get entry ID 4 and display result using myCB callback
+        myDB["testtable"].get(4, myCB);
+        
+    </script>
+  </head>
+<body></body>
+</html> 
