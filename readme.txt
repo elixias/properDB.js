@@ -1,14 +1,14 @@
-<h2>Include properDB.js into your .html page.</h2>
+**Include properDB.js into your .html page.**
 
 <script type="text/javascript" src="properDB.js"></script>
 
-<h2>Initialize a new Database</h2>
+**Initialize a new Database**
 
         var myDB = new properDB(); //create a new DB with default settings
         //OR
         myDB = new properDB("DB_Name",1,"DB_Display Name",50000); //create a new DB with your settings
 
-<h2>Using Database.execute()</h2>
+**Using Database.execute()**
 
         //Database execute(), if you want to manually execute commands without using other properDB.js inbuilt functions
         myDB.execute("DROP TABLE IF EXISTS commandtable");
@@ -23,7 +23,7 @@
         }
         myDB.execute("SELECT * FROM commandtable", callback); //specify a callback function to catch results
 
-<h2>Adding a Table</h2>
+**Adding a Table**
 
         //adding a table to the DB, primary keys are auto created for you
         //addTable(<tablename>, "<col1> [mySQL options], <col2> [mySQL options],...")
@@ -34,20 +34,20 @@
 	myDB["testtable"].create();   //if you want to create after dropping
         myDB["testtable"].recreate(); //calls drop() then create()
         
-<h2>Adding records to table</h2>
-<h3>As arguments</h3>
+**Adding records to table**
+_As arguments_
 
         //Add new entries to tables. you can cascade function calls.
         myDB["testtable"].add("entry 1","lorem ipsum")
         	.add("entry 2","dorsa latin")
         	.add("entry 3","third entry");
-<h3>As object</h3>        
+_As object_        
         //add new entries as an object, you can cascade function calls (not shown)
         var new_entry = {"T_COL1":"entry X","T_COL2":"data X"};
         myDB["testtable"].add(new_entry);
         
-<h2>Selecting records</h2>
-<h3>Selecting records with default behavior (prints to console.log)</h3>
+**Selecting records**
+_Selecting records with default behavior (prints to console.log)_
         //selecting entries
         myDB["testtable"].get();  //gets all records
         myDB["testtable"].get(3); //gets record with id=3
@@ -58,25 +58,25 @@
             console.log("Final results:"+JSON.stringify(results));   
         });
 
-<h2>Deleting records</h2>
+**Deleting records**
 
         //deleting entries
         myDB["testtable"].delete(1); //delete entry with ID 1
         myDB["testtable"].delete("T_COL1='entry 3'"); //DELETE entry WHERE T_DATA='entry 3'
 
-<h2>Updating records</h2> 
-<h3>Using arguments</h3>       
+**Updating records** 
+_Using arguments_       
 
         //updating entries
         myDB["testtable"].update(2,"entry 2 updated","lorem ipsum lorem ipsum"); //update ID 2
 
-<h2>Using an object</h2>
+**Using an object**
 
         //update ID 2 using object, uses P_ID as the WHERE clause
         var obj={"P_ID":2,"T_COL1":"entry 2 changed","T_COL2":"entry 2 data changed"} ; 
 	myDB["testtable"].update(obj);
 
-<h2>Example - Modifying existing data entry using get() and update()</h2>		
+**Example - Modifying existing data entry using get() and update()**		
 
 	// 1) Set callbacks first
 
