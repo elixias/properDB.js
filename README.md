@@ -30,10 +30,11 @@
 ```
         //create, delete or recreate the table
         myDB["testtable"].drop();     //you will lose all entries in table
-	myDB["testtable"].create();   //if you want to create after dropping
+        myDB["testtable"].create();   //if you want to create after dropping
         myDB["testtable"].recreate(); //calls drop() then create()
 ```
 **Adding records to table**
+
 _As arguments_
 ```
         //Add new entries to tables. you can cascade function calls.
@@ -48,6 +49,7 @@ _As object_
         myDB["testtable"].add(new_entry);
 ```        
 **Selecting records**
+
 _Selecting records with default behavior (prints to console.log)_
 ```
 	//selecting entries
@@ -67,22 +69,23 @@ _Selecting records with default behavior (prints to console.log)_
         myDB["testtable"].delete("T_COL1='entry 3'"); //DELETE entry WHERE T_DATA='entry 3'
 ```
 **Updating records** 
+
 _Using arguments_       
 ```
         //updating entries
         myDB["testtable"].update(2,"entry 2 updated","lorem ipsum lorem ipsum"); //update ID 2
 ```
-**Using an object**
+_Using an object_
 ```
         //update ID 2 using object, uses P_ID as the WHERE clause
         var obj={"P_ID":2,"T_COL1":"entry 2 changed","T_COL2":"entry 2 data changed"} ; 
-	myDB["testtable"].update(obj);
+        myDB["testtable"].update(obj);
 ```
 **Example - Modifying existing data entry using get() and update()**		
 ```
-	// 1) Set callbacks first
+        // 1) Set callbacks first
 
-	var myCB2 = function(results){ 
+        var myCB2 = function(results){ 
             console.log("Final results:"+JSON.stringify(results));   
         }
 
@@ -90,10 +93,10 @@ _Using arguments_
             var obj = results[0];               //take the first result entry
             obj["T_COL1"] = "WE CHANGED THIS!"; //change variable this way
             obj.T_COL2 = "And this too.";       //or this way
-			myDB["testtable"].update(obj);
+            myDB["testtable"].update(obj);
             myDB["testtable"].get(4, myCB2);    //display result using myCB2 callback
         }
 
-	// 2) Get entry ID 4 and display result using myCB callback
+        // 2) Get entry ID 4 and display result using myCB callback
         myDB["testtable"].get(4, myCB);
 ```
