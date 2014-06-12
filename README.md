@@ -1,6 +1,6 @@
 **What is properDB.js?**
 
-properDB.js is a JS library for Phonegap. It wraps the native storage calls into an easy to use properDB object.
+properDB.js is a JS library for managing HTML5 webSQL databases. It wraps the native storage calls into an easy to use properDB object.
 
 See README.md for all functions and usage.
 Supports raw SQL commands, adding updating by arguments or objects, and querying with results using callback functions.
