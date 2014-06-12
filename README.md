@@ -38,9 +38,12 @@ See https://github.com/elixias/properDB.js/blob/master/index.html for actual imp
 ```
 ```
         //create, delete or recreate the table
-        myDB["testtable"].drop();     //you will lose all entries in table
-        myDB["testtable"].create();   //if you want to create after dropping
-        myDB["testtable"].recreate(); //calls drop() then create()
+        
+        var myTable = myDB["testtable"]; 
+        
+        myTable.drop();     //you will lose all entries in table
+        myTable.create();   //if you want to create after dropping
+        myTable.recreate(); //calls drop() then create()
 ```
 **Adding records to table**
 
