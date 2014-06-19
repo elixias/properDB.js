@@ -74,7 +74,7 @@ function properTable(db, tablename, tablefields){
             var columnobj = this.tablecols[col];
             for(key in columnobj) fields += key+" "+columnobj[key]; //this runs only once, grabs proper key and init args
         }
-        var sqlstring = 'CREATE TABLE IF NOT EXISTS '+this.tablename+'(P_ID INTEGER PRIMARY KEY AUTO_INCREMENT,'+this.tablefields+')';
+        var sqlstring = 'CREATE TABLE IF NOT EXISTS '+this.tablename+'(P_ID INTEGER PRIMARY KEY,'+this.tablefields+')';
         //console.log(sqlstring);
         tx.executeSql(sqlstring);
     };
