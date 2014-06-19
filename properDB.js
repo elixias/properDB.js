@@ -100,7 +100,7 @@ function properTable(db, tablename, tablefields){
     this.insert = function(tx, data){
         var values = "";
         var columns = "";
-        if(typeof data[0]=="string"){
+        if(Object.prototype.toString.call(data[0])!="[object Object]"){
             for(value in data){
                 if(values) values += ",";
                 if(typeof data[value] == "string") values+= "'"+data[value]+"'";
